@@ -1,6 +1,5 @@
 target
-db/tables
-db/ref
+/db
 
 node_modules
 
