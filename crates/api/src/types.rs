@@ -38,9 +38,9 @@ pub enum Medium {
     #[sqlx(rename = "12 inch vinyl")]
     #[strum(serialize = "12 inch vinyl")]
     Vinyl12,
-    #[serde(rename = "3 inch CD")]
-    #[sqlx(rename = "3 inch CD")]
-    #[strum(serialize = "3 inch CD")]
+    #[serde(rename = "3 inch cd")]
+    #[sqlx(rename = "3 inch cd")]
+    #[strum(serialize = "3 inch cd")]
     Vinyl3,
     #[serde(rename = "5 inch vinyl")]
     #[sqlx(rename = "5 inch vinyl")]
@@ -70,9 +70,9 @@ pub enum Medium {
     #[sqlx(rename = "cassette")]
     #[strum(serialize = "cassette")]
     Cassette,
-    #[serde(rename = "CD")]
-    #[sqlx(rename = "CD")]
-    #[strum(serialize = "CD")]
+    #[serde(rename = "cd")]
+    #[sqlx(rename = "cd")]
+    #[strum(serialize = "cd")]
     Cd,
     #[serde(rename = "flexidisc")]
     #[sqlx(rename = "flexidisc")]
