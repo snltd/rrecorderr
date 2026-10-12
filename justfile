@@ -1,7 +1,10 @@
-dev-api:
-    cd api && cargo run
+[parallel]
+run-dev: run-dev-api run-dev-ui
 
-dev-ui:
+run-dev-api:
+    cd crates/api && cargo run
+
+run-dev-ui:
     cd frontend && npm ci && npm run dev
 
 build:
