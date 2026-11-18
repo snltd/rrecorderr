@@ -1,0 +1,140 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT \n            r.id,\n            r.title,\n            l.name as label_name,\n            l.id as label_id,\n            r.medium AS \"medium!: Medium\",\n            r.release_type AS \"release_type!: ReleaseType\",\n            r.released,\n            r.discogs_vgplus_value as value_estimated,\n            r.discogs_cheapest_uk as value_cheapest_uk,\n            r.discogs_cheapest_world as value_cheapest_world,\n            jsonb_agg(\n                jsonb_build_object(\n                    'id', a.id,\n                    'name', a.name\n                ) ORDER BY a.name\n            ) AS \"artists!: sqlx::types::Json<Vec<Artist>>\"\n        FROM rec r\n        JOIN label l ON l.id = r.label_id\n        JOIN perf p ON p.rec_id = r.id\n        JOIN artist a ON a.id = p.artist_id\n        WHERE medium = $1::medium\n        GROUP BY r.id, r.title, l.name, l.id\n        ORDER BY r.discogs_cheapest_uk DESC\n        LIMIT $2\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "title",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "label_name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "label_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 4,
+        "name": "medium!: Medium",
+        "type_info": {
+          "Custom": {
+            "name": "medium",
+            "kind": {
+              "Enum": [
+                "10 inch vinyl",
+                "12 inch vinyl",
+                "3 inch cd",
+                "5 inch vinyl",
+                "6 inch vinyl",
+                "7 inch vinyl",
+                "8 inch vinyl",
+                "9 inch vinyl",
+                "11 inch vinyl",
+                "cassette",
+                "cd",
+                "flexidisc",
+                "DVD"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "release_type!: ReleaseType",
+        "type_info": {
+          "Custom": {
+            "name": "release_type",
+            "kind": {
+              "Enum": [
+                "box set",
+                "lp",
+                "lp sampler",
+                "mini lp",
+                "single",
+                "split single",
+                "split lp"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "ordinal": 6,
+        "name": "released",
+        "type_info": "Int2"
+      },
+      {
+        "ordinal": 7,
+        "name": "value_estimated",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 8,
+        "name": "value_cheapest_uk",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 9,
+        "name": "value_cheapest_world",
+        "type_info": "Numeric"
+      },
+      {
+        "ordinal": 10,
+        "name": "artists!: sqlx::types::Json<Vec<Artist>>",
+        "type_info": "Jsonb"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        {
+          "Custom": {
+            "name": "medium",
+            "kind": {
+              "Enum": [
+                "10 inch vinyl",
+                "12 inch vinyl",
+                "3 inch cd",
+                "5 inch vinyl",
+                "6 inch vinyl",
+                "7 inch vinyl",
+                "8 inch vinyl",
+                "9 inch vinyl",
+                "11 inch vinyl",
+                "cassette",
+                "cd",
+                "flexidisc",
+                "DVD"
+              ]
+            }
+          }
+        },
+        "Int8"
+      ]
+    },
+    "nullable": [
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      null
+    ]
+  },
+  "hash": "5ac1c443e1c6f96987bea592728db1973a4e5b05bb0a2b2ba1ec13085ba10617"
+}
