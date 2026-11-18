@@ -3,8 +3,7 @@ name = "assay"
 edition = "2024"
 
 [dependencies]
-anyhow = "1"
-bigdecimal = "0.4.11"
+camino = "1"
 dotenvy = "0.15.7"
 regex = "1"
 scraper = "0.29"
