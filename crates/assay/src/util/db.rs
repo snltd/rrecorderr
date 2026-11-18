@@ -19,9 +19,6 @@ pub async fn update_api_price(
         }
         _ => {
             tracing::info!("{id} has no suggested price");
-            sqlx::query!("UPDATE rec SET discogs_updated = NOW() WHERE id = $1", id)
-                .execute(pool)
-                .await?;
         }
     }
 
@@ -74,10 +71,15 @@ pub async fn update_www_price(
         }
     } else {
         tracing::info!("{id} has no cheapest price");
-        sqlx::query!("UPDATE rec SET discogs_updated = NOW() WHERE id = $1", id)
-            .execute(pool)
-            .await?;
     }
+
+    Ok(())
+}
+
+pub async fn update_discogs_scraped(pool: &PgPool, id: i32) -> anyhow::Result<()> {
+    sqlx::query!("UPDATE rec SET discogs_updated = NOW() WHERE id = $1", id)
+        .execute(pool)
+        .await?;
 
     Ok(())
 }

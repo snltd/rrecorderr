@@ -1,3 +1,4 @@
 ## assay
 
-`assay` updates a MySQL database with current price info scraped from Discogs.
+`assay` updates a Postgres database with current price info scraped from
+Discogs.
