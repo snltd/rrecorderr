@@ -32,7 +32,7 @@ async fn main() {
             }
         },
         Err(e) => {
-            tracing::error!("ERROR getting list: {e}");
+            tracing::error!("ERROR getting list of records from DB: {e}");
             std::process::exit(2);
         }
     }
