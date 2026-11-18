@@ -23,6 +23,7 @@ pub struct ValuedRecord {
     pub value_cheapest_uk: Option<BigDecimal>,
     #[serde(serialize_with = "helpers::round_to_pence")]
     pub value_cheapest_world: Option<BigDecimal>,
+    pub discogs_uri: Option<String>,
 }
 
 #[derive(Deserialize)]
@@ -49,6 +50,7 @@ pub async fn most_expensive(
             r.discogs_vgplus_value as value_estimated,
             r.discogs_cheapest_uk as value_cheapest_uk,
             r.discogs_cheapest_world as value_cheapest_world,
+            r.discogs_uri,
             jsonb_agg(
                 jsonb_build_object(
                     'id', a.id,

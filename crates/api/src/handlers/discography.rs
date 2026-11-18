@@ -1,9 +1,7 @@
-use crate::helpers;
 use crate::types::{Artist, Medium, ReleaseType};
 use axum::Json;
 use axum::extract::{Path, State};
 use axum::http::StatusCode;
-use bigdecimal::BigDecimal;
 use serde::{Deserialize, Serialize};
 use sqlx::PgPool;
 
@@ -20,8 +18,7 @@ pub struct RecordWithArtists {
     pub cat_no: Option<String>,
     pub released: Option<i16>,
     pub notes: Option<String>,
-    #[serde(serialize_with = "helpers::round_to_pence")]
-    pub value: Option<BigDecimal>,
+    pub value: Option<f64>,
 }
 
 pub async fn artist(
@@ -42,7 +39,7 @@ pub async fn artist(
             r.cat_no,
             r.released,
             r.notes,
-            r.discogs_vgplus_value as value,
+            CAST(r.discogs_vgplus_value AS FLOAT8) as value,
             jsonb_agg(
                 jsonb_build_object(
                     'id', a.id,
@@ -86,7 +83,7 @@ pub async fn label(
             r.cat_no,
             r.released,
             r.notes,
-            r.discogs_vgplus_value as value,
+            CAST(r.discogs_vgplus_value AS FLOAT8) as value,
             jsonb_agg(
                 jsonb_build_object(
                     'id', a.id,
