@@ -6,13 +6,13 @@ on:
     paths:
       - Cargo.lock
       - Cargo.toml
-      - "**/*.rs"
+      - "crates/**/*.rs"
       - .github/workflows/rust-tests.yml
   pull_request:
     paths:
       - Cargo.lock
       - Cargo.toml
-      - "**/*.rs"
+      - "crates/**/*.rs"
       - .github/workflows/rust-tests.yml
 
 env:
@@ -30,8 +30,6 @@ jobs:
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
-      - name: Install external dependencies
-        run: sudo apt-get update && sudo apt-get install -y lame flac ffmpeg mp3val
       - name: Checkout Code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
