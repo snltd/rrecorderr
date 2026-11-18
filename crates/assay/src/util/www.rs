@@ -113,14 +113,14 @@ fn extract_price_world(html: &str, id: &str) -> anyhow::Result<Option<BigDecimal
 #[cfg(test)]
 mod test {
     use super::*;
-    use snltest::load_fixture;
+    use snltest::load_fixture_gz;
     use std::str::FromStr;
 
     #[test]
     fn test_extract_price_world() {
         assert_eq!(
             BigDecimal::from_str("25.42").unwrap(),
-            extract_price_world(&load_fixture!("31853303-world.html"), "31853303")
+            extract_price_world(&load_fixture_gz!("31853303-world.html.gz"), "31853303")
                 .unwrap()
                 .unwrap()
         );
@@ -130,7 +130,7 @@ mod test {
     fn test_extract_price_uk() {
         assert_eq!(
             BigDecimal::from_str("17.50").unwrap(),
-            extract_price_uk(&load_fixture!("31853303-uk.html"), "31853303")
+            extract_price_uk(&load_fixture_gz!("31853303-uk.html.gz"), "31853303")
                 .unwrap()
                 .unwrap()
         );
