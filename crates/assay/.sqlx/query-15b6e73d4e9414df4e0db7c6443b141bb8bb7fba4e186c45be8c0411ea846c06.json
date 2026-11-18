@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE rec SET discogs_updated = NOW() WHERE id = $1",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Int4"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "15b6e73d4e9414df4e0db7c6443b141bb8bb7fba4e186c45be8c0411ea846c06"
+}

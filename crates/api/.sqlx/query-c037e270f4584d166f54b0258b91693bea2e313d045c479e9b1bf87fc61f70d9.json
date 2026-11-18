@@ -1,0 +1,186 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT \n            r.id,\n            r.title,\n            l.name as label_name,\n            l.id as label_id,\n            r.medium AS \"medium!: Medium\",\n            r.release_type AS \"release_type!: ReleaseType\",\n            r.colour,\n            r.cat_no,\n            r.released,\n            r.notes,\n            CAST(r.discogs_vgplus_value AS FLOAT8) as value,\n            jsonb_agg(\n                jsonb_build_object(\n                    'id', a.id,\n                    'name', a.name\n                ) ORDER BY a.name\n            ) AS \"artists!: sqlx::types::Json<Vec<Artist>>\"\n        FROM rec r\n        JOIN label l ON l.id = r.label_id\n        JOIN perf p ON p.rec_id = r.id\n        JOIN artist a ON a.id = p.artist_id\n        WHERE r.id IN (\n            SELECT rec_id FROM perf WHERE artist_id = $1\n        )\n        GROUP BY r.id, r.title, l.name, l.id\n        ORDER BY r.released, r.cat_no COLLATE \"und-x-icu\"\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int4",
+        "origin": {
+          "Table": {
+            "table": "rec",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 1,
+        "name": "title",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "rec",
+            "name": "title"
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "label_name",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "label",
+            "name": "name"
+          }
+        }
+      },
+      {
+        "ordinal": 3,
+        "name": "label_id",
+        "type_info": "Int4",
+        "origin": {
+          "Table": {
+            "table": "label",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "medium!: Medium",
+        "type_info": {
+          "Custom": {
+            "name": "medium",
+            "kind": {
+              "Enum": [
+                "10 inch vinyl",
+                "12 inch vinyl",
+                "3 inch cd",
+                "5 inch vinyl",
+                "6 inch vinyl",
+                "7 inch vinyl",
+                "8 inch vinyl",
+                "9 inch vinyl",
+                "11 inch vinyl",
+                "cassette",
+                "cd",
+                "flexidisc",
+                "DVD"
+              ]
+            }
+          }
+        },
+        "origin": {
+          "Table": {
+            "table": "rec",
+            "name": "medium"
+          }
+        }
+      },
+      {
+        "ordinal": 5,
+        "name": "release_type!: ReleaseType",
+        "type_info": {
+          "Custom": {
+            "name": "release_type",
+            "kind": {
+              "Enum": [
+                "box set",
+                "lp",
+                "lp sampler",
+                "mini lp",
+                "single",
+                "split single",
+                "split lp"
+              ]
+            }
+          }
+        },
+        "origin": {
+          "Table": {
+            "table": "rec",
+            "name": "release_type"
+          }
+        }
+      },
+      {
+        "ordinal": 6,
+        "name": "colour",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "rec",
+            "name": "colour"
+          }
+        }
+      },
+      {
+        "ordinal": 7,
+        "name": "cat_no",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "rec",
+            "name": "cat_no"
+          }
+        }
+      },
+      {
+        "ordinal": 8,
+        "name": "released",
+        "type_info": "Int2",
+        "origin": {
+          "Table": {
+            "table": "rec",
+            "name": "released"
+          }
+        }
+      },
+      {
+        "ordinal": 9,
+        "name": "notes",
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "rec",
+            "name": "notes"
+          }
+        }
+      },
+      {
+        "ordinal": 10,
+        "name": "value",
+        "type_info": "Float8",
+        "origin": "Expression"
+      },
+      {
+        "ordinal": 11,
+        "name": "artists!: sqlx::types::Json<Vec<Artist>>",
+        "type_info": "Jsonb",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int4"
+      ]
+    },
+    "nullable": [
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      null,
+      null
+    ]
+  },
+  "hash": "c037e270f4584d166f54b0258b91693bea2e313d045c479e9b1bf87fc61f70d9"
+}
