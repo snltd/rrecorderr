@@ -10,6 +10,7 @@ export interface Release {
   released: number;
   notes: string;
   artists: Artist[];
+  value: number,
 }
 
 export interface ValuedRelease {
