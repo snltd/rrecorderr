@@ -13,7 +13,9 @@ let { release } = $props();
     {/if}
   </td>
 
-  <td>{release.title}</td>
+  <td>
+    <a href="https://discogs.com{release.discogs_uri}">{release.title}</a>
+  </td>
   <td>
     <a href="/discog/label/{release.label_id}">{release.label_name}</a>
   </td>
